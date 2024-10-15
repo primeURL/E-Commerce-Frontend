@@ -63,14 +63,14 @@ const Header = ({ user }: PropsType) => {
                 Orders
               </Link>
               <button onClick={logoutHandler}>
-                <FaSignOutAlt />
+                <FaSignOutAlt size={30}/>
               </button>
             </div>
           </dialog>
         </>
       ) : (
         <Link to={"/login"}>
-          <FaSignInAlt />
+          <FaSignInAlt size={30}/>
         </Link>
       )}
     </nav>
