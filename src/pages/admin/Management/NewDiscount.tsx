@@ -23,7 +23,7 @@ const NewDiscount = () => {
 
     try {
       const { data } = await axios.post(
-        `${server}/api/v1/payment/coupon/new?id=${user?._id}`,
+        `${server}/api/v1/payment/createnewcoupon?id=${user?._id}`,
         {
           code,
           amount,
@@ -32,10 +32,9 @@ const NewDiscount = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true,
+          // withCredentials: true,
         }
       );
-
       if (data.success) {
         setAmount(0);
         setCode("");

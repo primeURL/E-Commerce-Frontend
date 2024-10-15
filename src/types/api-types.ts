@@ -159,3 +159,12 @@ export type SingleDiscountResponse = {
   success: boolean;
   coupon: CouponType;
 };
+
+export type AllCouponResponse = {
+  success : boolean,
+  coupons : {
+    code: string;
+    amount: number;
+    _id: string;
+  }[]
+}

@@ -10,13 +10,13 @@ const PieCharts = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
   const { isLoading, data, isError } = usePieQuery(user?._id!);
-
-  const order = data?.charts.orderFullfillment!;
-  const categories = data?.charts.productCategories!;
-  const stock = data?.charts.stockAvailablity!;
-  const revenue = data?.charts.revenueDistribution!;
-  const ageGroup = data?.charts.usersAgeGroup!;
-  const adminCustomer = data?.charts.adminCustomer!;
+  console.log('data',data)
+  const order = data?.charts?.orderFullfillment!;
+  const categories = data?.charts?.productCategories!;
+  const stock = data?.charts?.stockAvailablity!;
+  const revenue = data?.charts?.revenueDistribution!;
+  const ageGroup = data?.charts?.usersAgeGroup!;
+  const adminCustomer = data?.charts?.adminCustomer!;
 
   if (isError) return <Navigate to={"/admin/dashboard"} />;
 

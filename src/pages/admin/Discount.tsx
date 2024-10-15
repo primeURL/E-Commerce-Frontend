@@ -1,4 +1,3 @@
-import { useFetchData } from "6pp";
 import { ReactElement, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaPlus } from "react-icons/fa6";
@@ -8,8 +7,9 @@ import { Column } from "react-table";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import TableHOC from "../../components/admin/TableHoc";
 import { Skeleton } from "../../components/Loader";
-import { RootState, server } from "../../redux/store";
-import { AllDiscountResponse } from "../../types/api-types";
+import { useAllCouponsQuery } from "../../redux/api/paymentAPI";
+import { RootState } from "../../redux/store";
+import { CustomError } from "../../types/api-types";
 
 interface DataType {
   code: string;
@@ -41,15 +41,13 @@ const columns: Column<DataType>[] = [
 const Discount = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
-  const {
-    data,
-    loading: isLoading,
-    error,
-  } = useFetchData<AllDiscountResponse>(
-    `${server}/api/v1/payment/coupon/all?id=${user?._id}`,
-    "discount-codes"
-  );
+  const {isLoading, data, isError, error} = useAllCouponsQuery(user?._id!)
 
+  if (isError) {
+    const err = error as CustomError;
+    toast.error(err.data.message);
+  }
+  console.log('Discount',data)
   const [rows, setRows] = useState<DataType[]>([]);
 
   const Table = TableHOC<DataType>(
@@ -60,16 +58,15 @@ const Discount = () => {
     rows.length > 6
   )();
 
-  if (error) toast.error(error);
 
   useEffect(() => {
     if (data)
       setRows(
-        data.coupons.map((i) => ({
+        data?.coupons.map((i) => ({
           _id: i._id,
           code: i.code,
           amount: i.amount,
-          action: <Link to={`/admin/discount/${i._id}`}>Manage</Link>,
+          action: <Link key={i._id} to={`/admin/discount/${i._id}`}>Manage</Link>,
         }))
       );
   }, [data]);
