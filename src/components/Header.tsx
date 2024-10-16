@@ -5,14 +5,13 @@ import { BsCartDashFill } from "react-icons/bs";
 import {
   FaSearch,
   FaSignInAlt,
-  FaSignOutAlt,
-  FaUser
+  FaSignOutAlt
 } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
-import { User } from "../types/types";
 import { RootState } from "../redux/store";
-import { useSelector } from "react-redux";
+import { User } from "../types/types";
 
 interface PropsType {
   user: User | null;
