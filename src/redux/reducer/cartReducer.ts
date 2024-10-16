@@ -29,12 +29,9 @@ void,             // Argument type (void because we're not passing anything to t
 >(
   'cart/updateBackend',
   async (_, { getState }) => {
-
     const {cartReducer,userReducer} = getState() as RootState;
     const userId = userReducer.user?._id
-    const {data} = await axios.put(`${import.meta.env.VITE_SERVER}/api/v1/user/updateUserCart/${userId}`,cartReducer)
-    console.log(data)
-
+    await axios.put(`${import.meta.env.VITE_SERVER}/api/v1/user/updateUserCart/${userId}`,cartReducer)
   }
 );
 
@@ -44,7 +41,6 @@ export const cartReducer = createSlice({
   reducers: {
     saveToCart : (state,action : PayloadAction<any>) => {
       state.loading = true;
-      console.log(action.payload)
       state.cartItems = action.payload.cartItems
       state.discount = action.payload.discount
       state.shippingCharges = action.payload.shippingCharges

@@ -28,7 +28,9 @@ const ProductCard = ({
       <img src={transformImage(photos?.[0]?.url, 400)} alt={name} />
       <p>{name}</p>
       <span>₹{price}</span>
-
+        {
+          stock === 0 ? <p style={{color:'red'}}>Out of Stock</p> : (stock < 5 ? <p>Only {stock} left</p> : <p style={{color:'green'}}>{stock} in stock</p>)
+        }
       <div>
         <button
           onClick={() =>

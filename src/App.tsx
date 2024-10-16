@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
@@ -53,6 +53,8 @@ const App = () => {
   const { user, loading } = useSelector(
     (state: RootState) => state.userReducer
   );
+  const timerId = useRef<NodeJS.Timeout>()
+  const [timer,setTimer] = useState(52)
 
   const dispatch = useDispatch();
 
@@ -68,8 +70,28 @@ const App = () => {
     });
   }, []);
 
+  useEffect(()=>{
+    if(loading){
+      timerId.current = setInterval(()=>{
+        setTimer(prev => prev - 1)
+      },1000)
+    }else{
+      setTimer(0)
+      clearTimeout(timerId.current)
+    }
+    return () => {
+      clearTimeout(timerId.current)
+    }
+  },[loading])
+  
   return loading ? (
-    <Loader />
+    <><Loader />
+    <div style={{position:'absolute',top:'58%',left:'28%',fontSize:'25px',color:'gray'}}>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The server is deployed on Vercel free instance,</p>
+      <p>which may take up to <strong style={{color:'green'}}>{timer} seconds </strong>to spin up a new instance.</p>
+    </div>
+    </>
+    
   ) : (
     <Router>
       {/* Header */}
