@@ -72,8 +72,20 @@ $color3: rgb(0, 104, 136);
   text-align: center;
 }
 
+.header-logo{
+  padding: 0 1rem;
+  a {
+    color: $color2;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+
+    &:hover {
+      color: $color3;
+    }
+  }
+}
 .header {
-  @include flex(row, flex-end, stretch, 1.2rem);
+  @include flex(row, space-evenly, center, 1.5rem);
   padding: 1rem;
   a {
     color: $color2;
@@ -84,34 +96,57 @@ $color3: rgb(0, 104, 136);
       color: $color3;
     }
   }
-
-  button {
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    background-color: transparent;
-    &:hover {
-      color: $color3;
+  .left-navigation {
+    flex :1;
+    margin-left: 6rem;
+    position: relative;
+    
+    img{
+      position: absolute;
+      width: 3rem;
+      left: -3rem;
+      bottom: 0.1rem;
+    }
+    span{
+      font-weight: 800;
+      font-size: larger;
+      color: green;
+      font-family: 'Times New Roman', Times, serif;
+      font-stretch: semi-condensed;
+      font-style: italic;
     }
   }
-   img{
-    border-radius: 50%;
-    width: 35px;
-  }
-  dialog {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    width: 100px;
-    position: absolute;
-    left: calc(100% - 104px);
-    top: 6%;
-    z-index: 2;
-    > div {
-      @include flex(column, flex-start, center, 0.25rem);
+  .right-navigation {
+    @include flex(row, flex-end, stretch, 1.5rem);
+    button {
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      background-color: transparent;
+      &:hover {
+        color: $color3;
+      }
     }
-
+     img{
+      border-radius: 50%;
+      width: 35px;
+    }
+    dialog {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      width: 100px;
+      position: absolute;
+      left: calc(100% - 104px);
+      top: 6%;
+      z-index: 2;
+      > div {
+        @include flex(column, flex-start, center, 0.25rem);
+      }
+  
+    }
   }
+ 
 }
 
 .not-found {
