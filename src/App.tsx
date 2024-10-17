@@ -53,8 +53,8 @@ const App = () => {
   const { user, loading } = useSelector(
     (state: RootState) => state.userReducer
   );
-  const timerId = useRef<NodeJS.Timeout>()
-  const [timer,setTimer] = useState(58)
+  const timerId = useRef<NodeJS.Timeout>();
+  const [timer, setTimer] = useState(58);
 
   const dispatch = useDispatch();
 
@@ -62,38 +62,49 @@ const App = () => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const data = await getUser(user.uid);
-        if(data.success === true){
+        if (data.success === true) {
           dispatch(userExist(data.user));
-          dispatch(saveToCart(data.user.userCart))
+          dispatch(saveToCart(data.user.userCart));
         }
       } else dispatch(userNotExist());
     });
   }, []);
 
-  useEffect(()=>{
-    if(loading){
-      timerId.current = setInterval(()=>{
-        setTimer(prev => prev - 1)
-      },1000)
-    }else{
-      setTimer(0)
-      clearTimeout(timerId.current)
+  useEffect(() => {
+    if (loading) {
+      timerId.current = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else {
+      setTimer(0);
+      clearTimeout(timerId.current);
     }
     return () => {
-      clearTimeout(timerId.current)
-    }
-  },[loading])
+      clearTimeout(timerId.current);
+    };
+  }, [loading]);
   return loading ? (
-    <><Loader />
-    <div style={{position:'absolute',top:'63%',left:'50%',
-      transform: 'translate(-50%, -50%)',
-      textAlign: 'center',
-      fontSize:'25px',color:'gray'}}>
-      <p>The server is deployed on Render free instance,</p>
-      <p>which may take up to <strong style={{color:'green'}}>{timer} seconds </strong>to spin up a new instance.</p>
-    </div>
+    <>
+      <Loader />
+      <div
+        style={{
+          position: "absolute",
+          top: "63%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+          fontSize: "25px",
+          color: "gray",
+        }}
+      >
+        <p>The server is deployed on Render free instance,</p>
+        <p>
+          which may take up to{" "}
+          <strong style={{ color: "green" }}>{timer} seconds </strong>to spin up
+          a new instance.
+        </p>
+      </div>
     </>
-    
   ) : (
     <Router>
       {/* Header */}
