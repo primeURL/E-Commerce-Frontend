@@ -147,6 +147,9 @@ const ProductDetails = () => {
                 {data?.product?.numOfReviews} reviews)
               </em>
               <h3>₹{data?.product?.price}</h3>
+              {
+          data?.product.stock === 0 ? <p style={{color:'red'}}>Out of Stock</p> : (data?.product?.stock! < 5 ? <p style={{color:'coral'}}>Only {data?.product.stock} left</p> : <p style={{color:'green'}}>{data?.product.stock} in stock</p>)
+        }
               <article>
                 <div>
                   <button onClick={decrement}>-</button>
