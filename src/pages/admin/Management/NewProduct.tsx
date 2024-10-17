@@ -15,8 +15,8 @@ const NewProduct = () => {
 
   const [name, setName] = useState<string>("");
   const [category, setCategory] = useState<string>("");
-  const [price, setPrice] = useState<number>(1000);
-  const [stock, setStock] = useState<number>(1);
+  const [price, setPrice] = useState<number>();
+  const [stock, setStock] = useState<number>(12);
   const [description, setDescription] = useState<string>("");
 
   const [newProduct] = useNewProductMutation();
@@ -58,98 +58,110 @@ const NewProduct = () => {
   return (
     <div className="admin-container">
       <AdminSidebar />
-      {
-        isLoading ? <>
-         <Loader/>
-         <span
-         style={{position:'absolute',top:'70%',left:'50%'}}>Hang On ! New Product is being created</span>
-        </> : <>
-          <main className="product-management">
-        <article>
-          <form onSubmit={submitHandler}>
-            <h2>New Product</h2>
-            <div>
-              <label>Name</label>
-              <input
-                required
-                type="text"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label>Description</label>
-              <textarea
-                required
-                placeholder="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label>Price</label>
-              <input
-                required
-                type="number"
-                placeholder="Price"
-                value={price}
-                onChange={(e) => setPrice(Number(e.target.value))}
-              />
-            </div>
-            <div>
-              <label>Stock</label>
-              <input
-                required
-                type="number"
-                placeholder="Stock"
-                value={stock}
-                onChange={(e) => setStock(Number(e.target.value))}
-              />
-            </div>
-
-            <div>
-              <label>Category</label>
-              <input
-                required
-                type="text"
-                placeholder="eg. laptop, camera etc"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label>Photos</label>
-              <input
-                required
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={photos.changeHandler}
-              />
-            </div>
-
-            {photos.error && <p>{photos.error}</p>}
-
-            <span className="photo-preview">
-              {photos.preview &&
-                photos.preview.map((img, i) => (
-                  <img key={i} src={img} alt="New Image" />
-                ))}
-            </span>
-          
-            <button disabled={isLoading} type="submit">
-              Create
-            </button>
-          </form>
-        </article>
-      </main>
+      {isLoading ? (
+        <>
+          <Loader />
+          <span
+            style={{
+              position: "absolute",
+              transform: "translate(-50%, -50%)",
+              top: "65%",
+              left: "61%",
+              
+              textAlign: "center",
+              color:'gray'
+            }}
+          >
+            Hang On ! New Product is being created
+          </span>
         </>
-      }
-    
+      ) : (
+        <>
+          <main className="product-management">
+            <article>
+              <form onSubmit={submitHandler}>
+                <h2>New Product</h2>
+                <div>
+                  <label>Name</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label>Description</label>
+                  <textarea
+                    required
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label>Price</label>
+                  <input
+                    required
+                    type="number"
+                    placeholder="Price"
+                    value={price}
+                    onChange={(e) => setPrice(Number(e.target.value))}
+                  />
+                </div>
+                <div>
+                  <label>Stock</label>
+                  <input
+                    required
+                    type="number"
+                    placeholder="Stock"
+                    value={stock}
+                    onChange={(e) => setStock(Number(e.target.value))}
+                  />
+                </div>
+
+                <div>
+                  <label>Category</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="eg. laptop, camera etc"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label>Photos</label>
+                  <input
+                    required
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={photos.changeHandler}
+                  />
+                </div>
+
+                {photos.error && <p>{photos.error}</p>}
+
+                <span className="photo-preview">
+                  {photos.preview &&
+                    photos.preview.map((img, i) => (
+                      <img key={i} src={img} alt="New Image" />
+                    ))}
+                </span>
+
+                <button disabled={isLoading} type="submit">
+                  Create
+                </button>
+              </form>
+            </article>
+          </main>
+        </>
+      )}
     </div>
   );
 };

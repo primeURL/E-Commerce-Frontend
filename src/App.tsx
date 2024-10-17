@@ -54,7 +54,7 @@ const App = () => {
     (state: RootState) => state.userReducer
   );
   const timerId = useRef<NodeJS.Timeout>()
-  const [timer,setTimer] = useState(52)
+  const [timer,setTimer] = useState(58)
 
   const dispatch = useDispatch();
 
@@ -83,11 +83,13 @@ const App = () => {
       clearTimeout(timerId.current)
     }
   },[loading])
-  
   return loading ? (
     <><Loader />
-    <div style={{position:'absolute',top:'58%',left:'28%',fontSize:'25px',color:'gray'}}>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The server is deployed on Vercel free instance,</p>
+    <div style={{position:'absolute',top:'63%',left:'50%',
+      transform: 'translate(-50%, -50%)',
+      textAlign: 'center',
+      fontSize:'25px',color:'gray'}}>
+      <p>The server is deployed on Render free instance,</p>
       <p>which may take up to <strong style={{color:'green'}}>{timer} seconds </strong>to spin up a new instance.</p>
     </div>
     </>
